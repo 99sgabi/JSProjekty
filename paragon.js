@@ -6,7 +6,7 @@ class Item{
 
     sum()
     {
-        return this.count*this.sum;
+        return (this.count)*(this.price);
     }
 
     update(name, count, price)
@@ -31,15 +31,16 @@ function displayItems(itemList)
     {
         let newRow =table.insertRow();
         let lp = newRow.insertCell();
-        lp = i + 1;
+        lp.innerHTML = i + 1;
         let name = newRow.insertCell();
-        name = itemList[i].name;
+        name.innerHTML = itemList[i].name;
         let amout = newRow.insertCell()
-        amout = itemList[i].count;
+        amout.innerHTML = itemList[i].count;
         let price = newRow.insertCell()
-        price = itemList[i].price;
+        price.innerHTML = itemList[i].price;
         let sum = newRow.insertCell()
-        sum = itemList[i].sum();
+        sum.innerHTML = itemList[i].sum();
+        console.log(newRow)
     }
 }
 console.log(itemList)
