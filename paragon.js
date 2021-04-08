@@ -16,7 +16,13 @@ class Item{
         this.count = count;
     }
 }
+
+window.onbeforeunload = function() {
+    localStorage["receipt"] = JSON.stringify(itemList);
+}
+
 let itemList = [new Item("paczki", 10, 1.45), new Item("lukier", 12, 5.00)];
+console.log(JSON.parse(JSON.stringify(itemList)));
 let receipt = window.localStorage.getItem("receipt");
 if(receipt != null)
 {
@@ -26,10 +32,10 @@ if(receipt != null)
 
 function displayItems(itemList)
 {
-    let table = document.getElementsByTagName("table")[0];console.log(table)
+    let table = document.getElementsByTagName("table")[0];
     for(let i=0; i< itemList.length; i++)
     {
-        let newRow =table.insertRow();
+        let newRow =table.insertRow(i + 1);
         let lp = newRow.insertCell();
         lp.innerHTML = i + 1;
         let name = newRow.insertCell();
@@ -43,6 +49,5 @@ function displayItems(itemList)
         console.log(newRow)
     }
 }
-console.log(itemList)
 
 displayItems(itemList)
