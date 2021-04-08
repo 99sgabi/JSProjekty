@@ -1,3 +1,9 @@
+// G -> trzeba zrobic funkcje do walidacji - sprawdzanie czy nie jest pusta + czy nie sa wartosci ujemne
+// E -> dodawnie elementów do tabeli
+// G -> edycja istniejacych  - sumowanie wszystkich wierszy i zamiana na input; button
+// K -> usuwanie elementów - suma jeszcze raz puścić przy zmianie; button
+// K -> zmiana kolejności (próba drag & drop), ewentualnie zamiana wierszy 
+// E -> css
 let receipt = null;
 let table = document.getElementsByTagName("table")[0];
 
