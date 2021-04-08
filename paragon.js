@@ -1,3 +1,6 @@
+let receipt = null;
+let table = document.getElementsByTagName("table")[0];
+
 class Item{
     constructor(name, count, price)
     {
@@ -17,22 +20,8 @@ class Item{
     }
 }
 
-window.onbeforeunload = function() {
-    localStorage["receipt"] = JSON.stringify(itemList);
-}
-
-let itemList = [new Item("paczki", 10, 1.45), new Item("lukier", 12, 5.00)];
-console.log(JSON.parse(JSON.stringify(itemList)));
-let receipt = window.localStorage.getItem("receipt");
-if(receipt != null)
-{
-    window.localStorage.setItem("receipt", itemList);
-    receipt = window.localStorage.getItem("receipt");
-}
-
 function displayItems(itemList)
 {
-    let table = document.getElementsByTagName("table")[0];
     for(let i=0; i< itemList.length; i++)
     {
         let newRow =table.insertRow(i + 1);
@@ -45,9 +34,35 @@ function displayItems(itemList)
         let price = newRow.insertCell()
         price.innerHTML = itemList[i].price;
         let sum = newRow.insertCell()
-        sum.innerHTML = itemList[i].sum();
-        console.log(newRow)
+        sum.innerHTML = itemList[i].count * itemList[i].price;
+    }
+    console.log(table.rows.length)
+}
+
+function clearTable()
+{
+    console.log(table.rows.length)
+    for(let i = table.rows.length - 2; i > 0 ; i--)
+    {
+        table.deleteRow(i);
     }
 }
 
-displayItems(itemList)
+document.body.onload = function() {
+    if(localStorage["receipt"] != null)
+    {
+        receipt = JSON.parse(
+            window.localStorage.getItem("receipt"))
+        displayItems(receipt);    
+    }
+}
+
+window.onbeforeunload = function() {
+    localStorage["receipt"] = JSON.stringify(receipt);
+}
+
+/*let form = document.getElementById("addingNewElement");
+form.onsubmit((event) => {
+
+})*/
+setTimeout( () => clearTable(), 1000);
