@@ -1,12 +1,18 @@
 // + G -> trzeba zrobic funkcje do walidacji - sprawdzanie czy nie jest pusta + czy nie sa wartosci ujemne
-// E -> dodawnie elementów do tabeli
-// G -> edycja istniejacych  - sumowanie wszystkich wierszy i zamiana na input; button
+// E -> sumowanie wszystkich wierszy i dodawnie elementów do tabeli
+// + (ewentualnie do poprawy) G -> edycja istniejacych  -  zamiana na input; button
 // K -> usuwanie elementów - suma jeszcze raz puścić przy zmianie; button
 // K -> zmiana kolejności (próba drag & drop), ewentualnie zamiana wierszy 
 // E -> css
 let receipt = null;
 const form = document.getElementById("addingNewElement");
 let table = document.getElementsByTagName("table")[0];
+let div = document.getElementById("container");
+const inputs = ['<input name="nameEdit" id="nameEdit" type="text"></input>',
+                '<input name="countEdit" id="countEdit" type="number" step="0.1">',
+                '<input name="priceEdit" id="priceEdit" type="number" step="0.01">',
+                '------']
+let editingOneAtATime = false
 
 class Item{
     constructor(name, count, price)
@@ -57,9 +63,9 @@ function createNewRowInTable(itemLp, itemName, itemCount, itemPrice)
     let price = newRow.insertCell()
     price.innerHTML = itemPrice;
     let sum = newRow.insertCell()
-    sum.innerHTML = itemCount * itemPrice;
+    sum.innerHTML = (itemCount * itemPrice).toFixed(2);
     let button = newRow.insertCell()
-    button.innerHTML = '<button name="edit">Edytuj</button> <br/> <button name="delete">Usun</button>';
+    button.innerHTML = `<button data-editing="${false}" data-row-number="${itemLp}" class="edit">Edytuj</button> <br/> <button data-row-number="${itemLp}" class="delete">Usun</button>`;
 }
 
 function displayItems(itemList)
@@ -73,7 +79,6 @@ function displayItems(itemList)
 
 function clearTable()
 {
-    console.log(table.rows.length)
     for(let i = table.rows.length - 2; i > 0 ; i--)
     {
         table.deleteRow(i);
@@ -101,4 +106,41 @@ form.onsubmit = (event) => {
 
     event.preventDefault();
 }
+
+
+div.addEventListener("click", function(event){
+    if(event.target.className == "edit"  && event.target.dataset.editing == 'false')
+    {
+        if(editingOneAtATime) return false;
+        else
+        {
+            editingOneAtATime = !editingOneAtATime;
+        }
+        let rowNumber = parseInt(event.target.dataset.rowNumber)
+        localStorage["orginalRow"] = table.rows[rowNumber].outerHTML;
+        for(let i = 1; i <= 4 ; i++)
+            table.rows[rowNumber].cells[i].innerHTML = inputs[i - 1];
+        
+        event.target.dataset.editing = 'true';
+        return false;
+    }
+    else if(event.target.className == "edit" && event.target.dataset.editing == 'true')
+    {
+        let rowNumber = parseInt(event.target.dataset.rowNumber)
+        let name = document.getElementById("nameEdit").value
+        let count = parseFloat(document.getElementById("countEdit").value)
+        let price = parseFloat(document.getElementById("priceEdit").value)
+        if(validateItemData(name, count, price))
+        {
+            table.rows[rowNumber].cells[1].innerHTML = name;
+            table.rows[rowNumber].cells[2].innerHTML = count;
+            table.rows[rowNumber].cells[3].innerHTML = price;
+            table.rows[rowNumber].cells[4].innerHTML = (price * count).toFixed(2);
+        }
+        
+        event.target.dataset.editing = 'false';
+        editingOneAtATime = !editingOneAtATime
+        return false;
+    }
+})
 //setTimeout( () => clearTable(), 1000);
