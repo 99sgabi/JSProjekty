@@ -15,7 +15,7 @@
             </h1>
         <hr/>
         <br/>
-        <div>
+        <div id="container">
             <table style="width: 100%; table-layout: auto;">
                 <tr style="background-color: lightsteelblue;">
                     <th id="lp">LP</th>
@@ -31,9 +31,9 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th></th>
                     <th id="altogether">RAZEM</th>
                     <th id="sum" style="background-color: white;"></th>
+                    <th></th>
                     
                 </tr>
             </table>
@@ -45,7 +45,7 @@
                     <label for="name">Nazwa</label><br/>
                     <input name="name" id="name" type="text"><br/>
                     <label for="count">Ilosc</label><br/>
-                    <input name="count" id="count" type="number"><br/>
+                    <input name="count" id="count" type="number" step="0.1"><br/>
                     <label for="price">Cena</label><br/>
                     <input name="price" id="price" type="number" step="0.01"><br/><br/>
                     <input type="submit" value="Dodaj pozycje"><br/>
