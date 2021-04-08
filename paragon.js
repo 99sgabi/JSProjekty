@@ -16,3 +16,11 @@ class Item{
         this.count = count;
     }
 }
+
+let receipt = window.localStorage.getItem("receipt");
+let table = document.getElementsByTagName("table");
+if(receipt != null)
+{
+    window.localStorage.setItem("receipt", []);
+    receipt = window.localStorage.getItem("receipt");
+}
