@@ -47,7 +47,14 @@ function validateItemData(name, count, price)
 
 function sumTableElements()
 {
-
+    let sum = 0.0;
+    for(let i=0; i<receipt.length; i++)
+    {
+        sum += parseFloat((receipt[i].count * receipt[i].price).toFixed(2));
+    }
+    console.log("SUMA = "+ sum);
+    let row = table.rows[table.rows.length - 1];
+    row.cells[4].innerHTML = sum;
 }
 
 function createNewRowInTable(itemLp, itemName, itemCount, itemPrice)
@@ -90,7 +97,8 @@ document.body.onload = function() {
     {
         receipt = JSON.parse(
             window.localStorage.getItem("receipt"))
-        displayItems(receipt);    
+        if(receipt != null) displayItems(receipt);    
+        else receipt = []
     }
 }
 
@@ -100,14 +108,21 @@ window.onbeforeunload = function() {
 
 form.onsubmit = (event) => {
     //walidajca
-    validateItemData(
-        form.name.value, parseFloat(form.count.value), parseFloat(form.price.value))
-    
+    if(validateItemData(
+        form.name.value, parseFloat(form.count.value), parseFloat(form.price.value)))
+        {
+            let item = new Item(form.name.value, parseFloat(form.count.value), parseFloat(form.price.value))
+            receipt.push(item)
+            localStorage["receipt"] = JSON.stringify(receipt);
+            createNewRowInTable(this.table.length+1, item.name, item.count, item.name)
+            sumTableElements()
+        }
 
     event.preventDefault();
 }
 
-
+//musiałam dodać tu if (bez żadnych danych w local storage wyrzucało mi tu błąd)
+if(div != null)
 div.addEventListener("click", function(event){
     if(event.target.className == "edit"  && event.target.dataset.editing == 'false')
     {
