@@ -1,47 +1,54 @@
 <!DOCTYPE html>
-<style>
-    html{
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
-    tr{
-        border-bottom: lightslategray 2px solid;
-    }
-</style>
-<html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paragon</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</head>
+
     <body>
-        <hr/>
-            <h1 style="text-align: center;">
-                Paragon 10-10-20/100
-            </h1>
-        <hr/>
+        <header>
+            <hr/>
+                <h1>
+                    Paragon 10-10-20/100
+                </h1>
+            <hr/>
+        </header>
+
         <br/>
         <div id="container">
-            <table style="width: 100%; table-layout: auto;">
-                <tr style="background-color: lightsteelblue;">
-                    <th id="lp">LP</th>
-                    <th id="name">NAZWA</th>
-                    <th id="count">ILOSC</th>
-                    <th id="price">CENA</th>
-                    <th id="sum">SUMA</th>
-                    <th></th>
+            <table  class="table table-striped">
+                <tr>
+                    <th id="lp" class="tabColor">LP</th>
+                    <th id="name" class="tabColor">NAZWA</th>
+                    <th id="count" class="tabColor">ILOSC</th>
+                    <th id="price" class="tabColor">CENA</th>
+                    <th id="sum" class="tabColor">SUMA</th>
+                    <th class="tabColor"></th>
                     
                 </tr>
                 
-                <tr style="background-color: lightsteelblue;">
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th id="altogether">RAZEM</th>
-                    <th id="sum" style="background-color: white;"></th>
-                    <th></th>
+                <tr>
+                    <th class="tabColor"></th>
+                    <th class="tabColor"></th>
+                    <th class="tabColor"></th>
+                    <th id="altogether" class="tabColor">RAZEM</th>
+                    <th id="receipt_sum" class="tabColor"></th>
+                    <th class="tabColor"></th>
                     
                 </tr>
             </table>
         </div>
-        <div style="margin: auto; width: auto; text-align: center;">
+        <div>
             <form id="addingNewElement">
                 <h3>Nowa pozycja</h3>
-                <form style="align-self: center;">
+                <form >
                     <label for="name">Nazwa</label><br/>
                     <input name="name" id="name" type="text"><br/>
                     <label for="count">Ilosc</label><br/>
@@ -53,5 +60,11 @@
             </form>
         </div>
     </body>
+
     <script src="./paragon.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+
 </html>

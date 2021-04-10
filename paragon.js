@@ -53,8 +53,9 @@ function sumTableElements()
         sum += parseFloat((receipt[i].count * receipt[i].price).toFixed(2));
     }
     console.log("SUMA = "+ sum);
-    let row = table.rows[table.rows.length - 1];
-    row.cells[4].innerHTML = sum;
+    //let row = table.rows[table.rows.length - 1];
+    //row.cells[4].innerHTML = sum;
+    document.getElementById("receipt_sum").innerHTML = sum;
 }
 
 function createNewRowInTable(itemLp, itemName, itemCount, itemPrice)
