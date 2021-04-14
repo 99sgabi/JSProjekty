@@ -36,7 +36,7 @@ function validateItemData(name, count, price)
         return false;
     }
         
-    if(count <= 0 || price <= 0)
+    if(count <= 0 || price <= 0 || isNaN(count) || isNaN(price))
     {
         alert("Cena, jak i ilosc musza byc liczbami dodatnimi")
         return false;
@@ -52,7 +52,6 @@ function sumTableElements()
     {
         sum += parseFloat((receipt[i].count * receipt[i].price).toFixed(2));
     }
-    console.log("SUMA = "+ sum);
     //let row = table.rows[table.rows.length - 1];
     //row.cells[4].innerHTML = sum;
     document.getElementById("receipt_sum").innerHTML = sum;
@@ -60,7 +59,6 @@ function sumTableElements()
 
 function createNewRowInTable(itemLp, itemName, itemCount, itemPrice)
 {
-    console.log(table)
     let newRow =table.insertRow(itemLp);
     let lp = newRow.insertCell();
     lp.innerHTML = itemLp;
@@ -99,7 +97,8 @@ document.body.onload = function() {
         receipt = JSON.parse(
             window.localStorage.getItem("receipt"))
         if(receipt != null) displayItems(receipt);    
-        else receipt = []
+        else 
+            receipt = [];
     }
 }
 
@@ -123,7 +122,6 @@ form.onsubmit = (event) => {
 }
 
 //musiałam dodać tu if (bez żadnych danych w local storage wyrzucało mi tu błąd)
-if(div != null)
 div.addEventListener("click", function(event){
     if(event.target.className == "edit"  && event.target.dataset.editing == 'false')
     {
@@ -133,12 +131,10 @@ div.addEventListener("click", function(event){
             editingOneAtATime = !editingOneAtATime;
         }
         let rowNumber = parseInt(event.target.dataset.rowNumber)
-        localStorage["orginalRow"] = table.rows[rowNumber].outerHTML;
         for(let i = 1; i <= 4 ; i++)
             table.rows[rowNumber].cells[i].innerHTML = inputs[i - 1];
         
         event.target.dataset.editing = 'true';
-        return false;
     }
     else if(event.target.className == "edit" && event.target.dataset.editing == 'true')
     {
@@ -152,11 +148,14 @@ div.addEventListener("click", function(event){
             table.rows[rowNumber].cells[2].innerHTML = count;
             table.rows[rowNumber].cells[3].innerHTML = price;
             table.rows[rowNumber].cells[4].innerHTML = (price * count).toFixed(2);
+            receipt[rowNumber - 1].name = name;
+            receipt[rowNumber - 1].price = price;
+            receipt[rowNumber - 1].count = count;
+            event.target.dataset.editing = 'false';
+            editingOneAtATime = !editingOneAtATime
         }
         
-        event.target.dataset.editing = 'false';
-        editingOneAtATime = !editingOneAtATime
-        return false;
     }
+    return false;
 })
 //setTimeout( () => clearTable(), 1000);
