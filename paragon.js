@@ -52,8 +52,12 @@ function sumTableElements()
     {
         sum += parseFloat((receipt[i].count * receipt[i].price).toFixed(2));
     }
+<<<<<<< HEAD
     //let row = table.rows[table.rows.length - 1];
     //row.cells[4].innerHTML = sum;
+=======
+    console.log("SUMA = "+ sum);
+>>>>>>> ba0a945060205449e7ae7e0e08481a80252f1d70
     document.getElementById("receipt_sum").innerHTML = sum;
 }
 
@@ -155,6 +159,13 @@ div.addEventListener("click", function(event){
             editingOneAtATime = !editingOneAtATime
         }
         
+<<<<<<< HEAD
+=======
+        event.target.dataset.editing = 'false';
+        editingOneAtATime = !editingOneAtATime
+        sumTableElements();
+        return false;
+>>>>>>> ba0a945060205449e7ae7e0e08481a80252f1d70
     }
     return false;
 })
