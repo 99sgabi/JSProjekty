@@ -98,6 +98,7 @@ document.body.onload = function() {
             window.localStorage.getItem("receipt"))
         if(receipt != null) displayItems(receipt);    
         else receipt = []
+        tableColors()
     }
 }
 
@@ -159,3 +160,12 @@ div.addEventListener("click", function(event){
     }
 })
 //setTimeout( () => clearTable(), 1000);
+
+//kolory w tabeli
+function tableColors(){
+    let n = table.rows.length;
+    for(let i=1;i<n-1;i++){
+        if(i%2==0) table.rows[i].className="tabColorDarker";
+        else  table.rows[i].className="tabColorLight";
+    }
+}
