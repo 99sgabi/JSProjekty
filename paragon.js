@@ -8,7 +8,8 @@ let receipt = null;
 const form = document.getElementById("addingNewElement");
 let table = document.getElementsByTagName("table")[0];
 let div = document.getElementById("container");
-const inputs = ['<input name="nameEdit" id="nameEdit" type="text"></input>',
+const inputs = ['------',
+                '<input name="nameEdit" id="nameEdit" type="text"></input>',
                 '<input name="countEdit" id="countEdit" type="number" step="0.1">',
                 '<input name="priceEdit" id="priceEdit" type="number" step="0.01">',
                 '------']
@@ -155,7 +156,6 @@ form.onsubmit = (event) => {
     event.preventDefault();
 }
 
-//musiałam dodać tu if (bez żadnych danych w local storage wyrzucało mi tu błąd)
 div.addEventListener("click", function(event){
     if(event.target.className == "edit"  && event.target.dataset.editing == 'false')
     {
@@ -164,8 +164,8 @@ div.addEventListener("click", function(event){
         {
             editingOneAtATime = !editingOneAtATime;
         }
-        let rowNumber = parseInt(event.target.dataset.rowNumber)
-        for(let i = 1; i <= 4 ; i++)
+        let rowNumber = parseInt(event.target.dataset.rowNumber);
+        for(let i = 2; i <= 5 ; i++)
             table.rows[rowNumber].cells[i].innerHTML = inputs[i - 1];
         
         event.target.dataset.editing = 'true';
@@ -178,10 +178,10 @@ div.addEventListener("click", function(event){
         let price = parseFloat(document.getElementById("priceEdit").value)
         if(validateItemData(name, count, price))
         {
-            table.rows[rowNumber].cells[1].innerHTML = name;
-            table.rows[rowNumber].cells[2].innerHTML = count;
-            table.rows[rowNumber].cells[3].innerHTML = price;
-            table.rows[rowNumber].cells[4].innerHTML = (price * count).toFixed(2);
+            table.rows[rowNumber].cells[2].innerHTML = name;
+            table.rows[rowNumber].cells[3].innerHTML = count;
+            table.rows[rowNumber].cells[4].innerHTML = price;
+            table.rows[rowNumber].cells[5].innerHTML = (price * count).toFixed(2);
             receipt[rowNumber - 1].name = name;
             receipt[rowNumber - 1].price = price;
             receipt[rowNumber - 1].count = count;
