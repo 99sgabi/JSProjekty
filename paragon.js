@@ -52,8 +52,6 @@ function sumTableElements()
     {
         sum += parseFloat((receipt[i].count * receipt[i].price).toFixed(2));
     }
-    //let row = table.rows[table.rows.length - 1];
-    //row.cells[4].innerHTML = sum;
     document.getElementById("receipt_sum").innerHTML = sum;
 }
 
@@ -101,6 +99,7 @@ function display(){
         if(receipt != null) displayItems(receipt);    
         else 
             receipt = [];
+        tableColors();
     }
 }
 
@@ -188,6 +187,7 @@ div.addEventListener("click", function(event){
             receipt[rowNumber - 1].count = count;
             event.target.dataset.editing = 'false';
             editingOneAtATime = !editingOneAtATime
+            sumTableElements();
         }
         
     }
@@ -206,3 +206,12 @@ div.addEventListener("click", function(event){
     //return false;
 })
 //setTimeout( () => clearTable(), 1000);
+
+//kolory w tabeli
+function tableColors(){
+    let n = table.rows.length;
+    for(let i=1;i<n-1;i++){
+        if(i%2==0) table.rows[i].className="tabColorDarker";
+        else  table.rows[i].className="tabColorLight";
+    }
+}
