@@ -60,6 +60,8 @@ function sumTableElements()
 function createNewRowInTable(itemLp, itemName, itemCount, itemPrice)
 {
     let newRow =table.insertRow(itemLp);
+    let buttons = newRow.insertCell();
+    buttons.innerHTML = `<button data-editing="${false}" data-row-number="${itemLp}" class="up">▲</button> <br/> <button data-row-number="${itemLp}" class="down">▼</button>`;
     let lp = newRow.insertCell();
     lp.innerHTML = itemLp;
     let name = newRow.insertCell();
@@ -91,7 +93,7 @@ function clearTable()
     }
 }
 
-document.body.onload = function() {
+function display(){
     if(localStorage["receipt"] != null)
     {
         receipt = JSON.parse(
@@ -100,6 +102,39 @@ document.body.onload = function() {
         else 
             receipt = [];
     }
+}
+
+function deleteItem(itemLp){
+    receipt.pop(itemLp);
+    table.deleteRow(itemLp);
+    sumTableElements();
+}
+
+function moveUp(i){
+    if(i > 1){
+        console.log('move ' + i + ' to ' + (i-1))
+        let placeholder = receipt[i-1];
+        receipt[i-1] = receipt[i-2];
+        receipt[i-2] = placeholder;
+        localStorage["receipt"] = JSON.stringify(receipt);
+        clearTable();
+        display();
+    }
+}
+function moveDown(i){
+    if(i < receipt.length){
+        console.log('move ' + i + ' to ' + (i+1))
+        let placeholder = receipt[i-1];
+        receipt[i-1] = receipt[i];
+        receipt[i] = placeholder;
+        localStorage["receipt"] = JSON.stringify(receipt);
+        clearTable();
+        display();
+    }
+}
+
+document.body.onload = function() {
+    display()
 }
 
 window.onbeforeunload = function() {
@@ -156,6 +191,18 @@ div.addEventListener("click", function(event){
         }
         
     }
-    return false;
+    else if(event.target.className=="delete"){
+        let rowNumber = parseInt(event.target.dataset.rowNumber)
+        deleteItem(rowNumber)
+    }
+    else if(event.target.className=="up"){
+        let rowNumber = parseInt(event.target.dataset.rowNumber)
+        moveUp(rowNumber);
+    }
+    else if(event.target.className=="down"){
+        let rowNumber = parseInt(event.target.dataset.rowNumber)
+        moveDown(rowNumber);
+    }
+    //return false;
 })
 //setTimeout( () => clearTable(), 1000);
