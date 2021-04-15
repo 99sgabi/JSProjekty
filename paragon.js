@@ -1,3 +1,4 @@
+//Ewa Nowosada, Konrad Olender, Gabriela Sawicka 
 let receipt = null;
 const form = document.getElementById("addingNewElement");
 let table = document.getElementsByTagName("table")[0];
