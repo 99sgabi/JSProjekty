@@ -167,6 +167,10 @@ div.addEventListener("click", function(event){
         let rowNumber = parseInt(event.target.dataset.rowNumber);
         for(let i = 2; i <= 5 ; i++)
             table.rows[rowNumber].cells[i].innerHTML = inputs[i - 1];
+
+        document.getElementById("nameEdit").value = receipt[rowNumber].name   
+        document.getElementById("countEdit").value = receipt[rowNumber].count
+        document.getElementById("priceEdit").value = receipt[rowNumber].price
         
         event.target.dataset.editing = 'true';
     }
