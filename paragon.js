@@ -1,9 +1,3 @@
-// + G -> trzeba zrobic funkcje do walidacji - sprawdzanie czy nie jest pusta + czy nie sa wartosci ujemne
-// E -> sumowanie wszystkich wierszy i dodawnie elementów do tabeli
-// + (ewentualnie do poprawy) G -> edycja istniejacych  -  zamiana na input; button
-// K -> usuwanie elementów - suma jeszcze raz puścić przy zmianie; button
-// K -> zmiana kolejności (próba drag & drop), ewentualnie zamiana wierszy 
-// E -> css
 let receipt = null;
 const form = document.getElementById("addingNewElement");
 let table = document.getElementsByTagName("table")[0];
@@ -53,7 +47,7 @@ function sumTableElements()
     {
         sum += parseFloat((receipt[i].count * receipt[i].price).toFixed(2));
     }
-    document.getElementById("receipt_sum").innerHTML = sum;
+    document.getElementById("receipt_sum").innerHTML = sum.toFixed(2);
 }
 
 function createNewRowInTable(itemLp, itemName, itemCount, itemPrice)
@@ -105,9 +99,12 @@ function display(){
 }
 
 function deleteItem(itemLp){
-    receipt.pop(itemLp);
+    receipt.splice(itemLp - 1,1);
     table.deleteRow(itemLp);
     sumTableElements();
+    localStorage["receipt"] = JSON.stringify(receipt);
+    clearTable();
+        display();
 }
 
 function moveUp(i){
@@ -168,9 +165,9 @@ div.addEventListener("click", function(event){
         for(let i = 2; i <= 5 ; i++)
             table.rows[rowNumber].cells[i].innerHTML = inputs[i - 1];
 
-        document.getElementById("nameEdit").value = receipt[rowNumber].name   
-        document.getElementById("countEdit").value = receipt[rowNumber].count
-        document.getElementById("priceEdit").value = receipt[rowNumber].price
+        document.getElementById("nameEdit").value = receipt[rowNumber  - 1].name   
+        document.getElementById("countEdit").value = receipt[rowNumber - 1].count
+        document.getElementById("priceEdit").value = receipt[rowNumber - 1].price
         
         event.target.dataset.editing = 'true';
     }
@@ -195,22 +192,20 @@ div.addEventListener("click", function(event){
         }
         
     }
-    else if(event.target.className=="delete"){
+    else if(event.target.className=="delete" && !editingOneAtATime){
         let rowNumber = parseInt(event.target.dataset.rowNumber)
         deleteItem(rowNumber)
     }
-    else if(event.target.className=="up"){
+    else if(event.target.className=="up" && !editingOneAtATime){
         let rowNumber = parseInt(event.target.dataset.rowNumber)
         moveUp(rowNumber);
     }
-    else if(event.target.className=="down"){
+    else if(event.target.className=="down" && !editingOneAtATime){
         let rowNumber = parseInt(event.target.dataset.rowNumber)
         moveDown(rowNumber);
     }
-    //return false;
+    return false;
 })
-//setTimeout( () => clearTable(), 1000);
-
 //kolory w tabeli
 function tableColors(){
     let n = table.rows.length;
